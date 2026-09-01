@@ -1,0 +1,593 @@
+/* ====== Estilos adicionales para Registro de Atención en Terreno ====== */
+/* Se cargan DESPUÉS de styles.css y reutilizan sus variables (--blue, --gray-*, etc.) */
+
+input[type="time"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="month"],
+input[type="week"] {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    color: var(--gray-800);
+    background: #fff;
+    transition: border-color .15s, box-shadow .15s;
+    /* Deshabilita el picker nativo en iOS que causa problemas visuales */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+input[type="time"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="month"]:focus,
+input[type="week"]:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(21,96,189,0.12);
+}
+
+/* ===== Nota / leyenda ===== */
+.section-note {
+    font-size: 12.5px;
+    color: var(--gray-600);
+    font-style: italic;
+    margin: -8px 0 16px;
+}
+
+.legend-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    background: var(--gray-50);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 12.5px;
+    color: var(--gray-800);
+}
+.legend-box b { color: var(--blue); margin-right: 4px; }
+
+/* ===== Radio "pill" C / P / NA ===== */
+.radio-group {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+.radio-pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-600);
+    cursor: pointer;
+    user-select: none;
+    transition: all .12s;
+}
+.radio-pill input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+}
+.radio-pill:hover { border-color: var(--blue-mid); }
+
+.radio-pill.radio-c input:checked ~ span,
+.radio-pill.radio-c:has(input:checked) {
+    background: var(--green-light);
+    border-color: var(--green);
+    color: var(--green);
+}
+.radio-pill.radio-p:has(input:checked) {
+    background: #fff6e0;
+    border-color: #d99a1a;
+    color: #b47b0f;
+}
+.radio-pill.radio-na:has(input:checked) {
+    background: var(--gray-100);
+    border-color: var(--gray-400);
+    color: var(--gray-600);
+}
+.radio-pill.row-missing { border-color: var(--red); }
+
+/* ===== Filas de ejecución (checklist A-E) ===== */
+.exec-group { margin-bottom: 18px; }
+.exec-group-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+}
+.exec-group-hint {
+    font-size: 11.5px;
+    color: var(--gray-400);
+    font-style: italic;
+    margin-bottom: 8px;
+}
+.exec-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 9px 4px;
+    border-bottom: 1px solid var(--gray-100);
+}
+.exec-row:last-child { border-bottom: none; }
+.exec-label {
+    font-size: 13.5px;
+    color: var(--gray-800);
+    line-height: 1.35;
+}
+.exec-code {
+    display: inline-block;
+    min-width: 26px;
+    font-weight: 700;
+    color: var(--blue);
+    font-size: 12px;
+    margin-right: 4px;
+}
+.exec-group.disabled-group .exec-row { opacity: 0.45; }
+.exec-group.disabled-group .exec-label { color: var(--gray-400); }
+
+/* ===== Tabla de Pendientes y Derivaciones ===== */
+.pendientes-table-wrap { overflow-x: auto; }
+table.pendientes-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+table.pendientes-table th {
+    background: var(--blue-light);
+    color: var(--blue);
+    text-align: left;
+    padding: 8px 10px;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    border: 1px solid var(--border);
+}
+table.pendientes-table td {
+    border: 1px solid var(--border);
+    padding: 4px;
+    vertical-align: top;
+}
+table.pendientes-table td input,
+table.pendientes-table td textarea {
+    border: none;
+    padding: 7px 8px;
+    font-size: 13px;
+    width: 100%;
+    resize: vertical;
+    min-height: 42px;
+    border-radius: 6px;
+    font-family: var(--font);
+    background: #fff;
+}
+table.pendientes-table td textarea {
+    overflow-y: hidden;
+}
+table.pendientes-table td input:focus,
+table.pendientes-table td textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(21,96,189,0.15);
+}
+table.pendientes-table .col-item { width: 70px; }
+table.pendientes-table .col-clasificacion { width: 160px; }
+table.pendientes-table .col-hora { width: 100px; }
+table.pendientes-table .col-remove {
+    width: 40px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* ===== Clasificación: menú desplegable propio (permite texto en varias líneas) ===== */
+.clasif-select {
+    position: relative;
+    width: 100%;
+}
+.clasif-btn {
+    width: 100%;
+    min-height: 36px;
+    border: none;
+    background: #fff;
+    font-family: var(--font);
+    font-size: 12.5px;
+    line-height: 1.3;
+    text-align: left;
+    white-space: normal;
+    color: var(--gray-800);
+    padding: 7px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.clasif-btn.clasif-btn-placeholder { color: var(--gray-400); }
+.clasif-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(21,96,189,0.15);
+}
+.clasif-menu {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    max-height: 240px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.14);
+}
+.clasif-select.open .clasif-menu { display: block; }
+.clasif-option {
+    padding: 9px 10px;
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: var(--gray-800);
+    cursor: pointer;
+    border-bottom: 1px solid var(--gray-100);
+}
+.clasif-option:last-child { border-bottom: none; }
+.clasif-option:hover { background: var(--gray-50); }
+.btn-remove-row {
+    border: none;
+    background: transparent;
+    color: var(--red);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+}
+.btn-remove-row:hover { opacity: 0.7; }
+
+.empty-pendientes {
+    text-align: center;
+    color: var(--gray-400);
+    font-size: 12.5px;
+    padding: 14px;
+    font-style: italic;
+}
+
+.btn-add-row {
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-light);
+    color: var(--blue);
+    border: 1.5px dashed var(--blue-mid);
+    border-radius: var(--radius-sm);
+    padding: 9px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+}
+.btn-add-row:hover { background: #dcebff; }
+
+/* ===== Origen (checkboxes en línea) ===== */
+.origen-options, .resuelve-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.origen-options label, .resuelve-options label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13.5px;
+    color: var(--gray-800);
+    cursor: pointer;
+}
+.origen-options input, .resuelve-options input { width: 17px; height: 17px; accent-color: var(--blue); cursor: pointer; }
+
+.resuelve-detalle {
+    margin: 10px 0 0;
+    padding: 12px 14px;
+    border: 1.5px dashed var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--gray-50);
+    transition: border-color .15s, background .15s;
+}
+.resuelve-detalle-title {
+    font-size: 12px;
+    color: var(--gray-600);
+    margin: 0 0 10px;
+}
+.resuelve-detalle-fields {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.resuelve-detalle-fields > div { flex: 1; min-width: 160px; }
+.resuelve-detalle-fields label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+}
+.resuelve-detalle input:disabled {
+    background: var(--gray-100);
+    color: var(--gray-400);
+    cursor: not-allowed;
+}
+/* Cuando el usuario marca "Se deriva a MINSAL" y los campos se habilitan */
+.resuelve-detalle:has(input:not(:disabled)) {
+    border-style: solid;
+    border-color: var(--blue-mid);
+    background: var(--blue-light);
+}
+.resuelve-detalle:has(input:not(:disabled)) .resuelve-detalle-title {
+    color: var(--blue);
+}
+
+/* ===== Tipo de atención ===== */
+.tipo-atencion-options {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+.tipo-atencion-options label {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--gray-800);
+    transition: all .15s;
+}
+.tipo-atencion-options label:has(input:checked) {
+    border-color: var(--blue);
+    background: var(--blue-light);
+    color: var(--blue);
+}
+.tipo-atencion-options input { width: 17px; height: 17px; accent-color: var(--blue); cursor: pointer; }
+
+/* ===== Conformidad checkboxes ===== */
+.conformidad-checks {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+.conformidad-checks label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--gray-800);
+    cursor: pointer;
+}
+.conformidad-checks input { width: 17px; height: 17px; accent-color: var(--blue); cursor: pointer; }
+
+/* .btn-limpiar reutilizado fuera de .firma-buttons (necesita su propio box-model) */
+.btn-limpiar {
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all .15s;
+}
+
+.firma-block-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin: 18px 0 8px;
+}
+
+@media (max-width: 600px) {
+    .exec-row { flex-direction: row; }
+    .exec-label { font-size: 12.5px; }
+    .radio-pill { width: 32px; height: 30px; }
+    .resuelve-detalle { margin-left: 0; }
+}
+
+/* ======================================================================
+   MEJORAS VISUALES — botones y secciones de opciones
+   ====================================================================== */
+
+/* ===== Botón "Limpiar firma" (rediseñado) ===== */
+.btn-limpiar {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 7px;
+    background: #fff !important;
+    color: var(--gray-600) !important;
+    border: 1.5px solid var(--border) !important;
+    padding: 9px 16px !important;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+}
+.btn-limpiar:hover {
+    background: var(--gray-50) !important;
+    border-color: var(--gray-400) !important;
+    color: var(--gray-800) !important;
+}
+.btn-limpiar:active { transform: scale(0.98); }
+.btn-limpiar-icon {
+    display: inline-flex;
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ===== Botón "+ Agregar pendiente" (rediseñado, sólido) ===== */
+.btn-add-row {
+    border: 1.5px solid var(--blue) !important;
+    background: #fff !important;
+    color: var(--blue) !important;
+}
+.btn-add-row:hover {
+    background: var(--blue) !important;
+    color: #fff !important;
+}
+
+/* ===== Botón eliminar fila (icono circular) ===== */
+.btn-remove-row {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-size: 14px;
+    transition: background .15s, color .15s;
+}
+.btn-remove-row:hover {
+    background: var(--red-light);
+    opacity: 1;
+}
+
+/* ===== Estado vacío tabla de pendientes ===== */
+.empty-pendientes {
+    padding: 22px 14px;
+}
+.empty-pendientes::before {
+    content: "📌";
+    display: block;
+    font-size: 20px;
+    margin-bottom: 4px;
+    opacity: 0.5;
+}
+
+/* ===== Tarjetas de opción: Origen / Resuelve / Conformidad ===== */
+/* Reutiliza el mismo lenguaje visual que .tipo-atencion-options */
+.origen-options,
+.resuelve-options {
+    flex-direction: column;
+    gap: 8px;
+}
+.origen-options label,
+.resuelve-options label {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 11px 14px;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: all .15s;
+}
+.origen-options label:hover,
+.resuelve-options label:hover {
+    border-color: var(--blue-mid);
+    background: var(--gray-50);
+}
+.origen-options label:has(input:checked),
+.resuelve-options label:has(input:checked) {
+    border-color: var(--blue);
+    background: var(--blue-light);
+    color: var(--blue);
+    font-weight: 600;
+}
+
+/* ===== Conformidad: mismo tratamiento tipo "chip" ===== */
+.conformidad-checks label {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 16px;
+    transition: all .15s;
+}
+.conformidad-checks label:hover {
+    border-color: var(--blue-mid);
+    background: var(--gray-50);
+}
+.conformidad-checks label:has(input:checked) {
+    border-color: var(--green);
+    background: var(--green-light);
+    color: var(--green);
+}
+
+/* ===== Legend box (C / P / NA) más legible ===== */
+.legend-box span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.legend-box b {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    border-radius: 5px;
+    background: var(--blue-light);
+    font-size: 11px;
+}
+
+/* ===== Filas de ejecución: leve resalte al pasar el cursor ===== */
+.exec-row {
+    border-radius: 6px;
+    transition: background .12s;
+}
+.exec-row:hover {
+    background: var(--gray-50);
+}
+
+@media (max-width: 600px) {
+    .origen-options label,
+    .resuelve-options label,
+    .conformidad-checks label { font-size: 13px; padding: 10px 12px; }
+
+    /* Inputs date/time con font-size 16px en mobile para prevenir zoom automático en iOS */
+    input[type="time"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="month"],
+    input[type="week"] {
+        font-size: 16px;
+        padding: 13px 12px;
+    }
+}
+
+/* ======================================================================
+   FIX iOS Safari — caja vacía duplicada en input[type="date"]
+   ------------------------------------------------------------------
+   Bug: en Safari/WebKit de iOS (incluye WebViews como el navegador
+   in-app de WhatsApp), el input[type="date"] vacío dibuja un botón
+   nativo de "borrar" (clear button) que se renderiza como un
+   rectángulo en blanco, viéndose como un segundo campo duplicado
+   justo debajo del real.
+   @supports (-webkit-touch-callout: none) detecta específicamente
+   WebKit de iOS (no aplica en Android, desktop ni otros navegadores).
+   Se apunta solo a input[type="date"], sin tocar time/datetime-local/
+   month/week ni ningún otro campo. ==================================== */
+@supports (-webkit-touch-callout: none) {
+    input[type="date"]::-webkit-clear-button,
+    input[type="date"]::-webkit-inner-spin-button {
+        display: none;
+        -webkit-appearance: none;
+    }
+    input[type="date"] {
+        min-height: 44px;
+        line-height: normal;
+    }
+}

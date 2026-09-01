@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro Atención en Terreno - MINSAL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles_terreno.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+    <div class="header-inner">
+        <div class="header-logo" style="background:#fff;padding:5px;"><img src="data:image/png;base64,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" alt="HP" style="width:100%;height:100%;object-fit:contain;display:block;"></div>
+        <div class="header-title">
+            <h1>Atención en Terreno</h1>
+            <p>MESA DE AYUDA HP / MINSAL</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <form id="registroForm">
+
+        <!-- 1. DATOS GENERALES -->
+        <section class="card">
+            <h2><span class="section-icon">🏢</span> 1. Datos Generales</h2>
+
+            <div class="grid-2">
+                <input type="text" id="ticket" placeholder="N° Ticket">
+                <input type="date" id="fecha">
+
+                <select id="organismo">
+                    <option value="">Seleccione Organismo</option>
+                </select>
+                <input type="text" id="establecimiento" placeholder="Establecimiento">
+
+                <input type="text" id="unidad" placeholder="Unidad o Depto">
+                <input type="text" id="direccion" placeholder="Dirección">
+
+                <select id="region">
+                    <option value="">Seleccione Región</option>
+                </select>
+                <select id="ciudad">
+                    <option value="">Seleccione Comuna / Ciudad</option>
+                </select>
+
+                <input type="text" id="responsable" placeholder="Responsable">
+                <div>
+                    <input type="text" id="rutResponsable" placeholder="RUT (12.345.678-9)" maxlength="12">
+                    <small id="errorRutResponsable" class="error-message"></small>
+                </div>
+
+                <input type="text" id="cargoUsuario" placeholder="Cargo usuario">
+                <div>
+                    <input type="email" id="emailUsuario" placeholder="Email usuario">
+                    <small id="errorEmailUsuario" class="error-message"></small>
+                </div>
+
+                <div>
+                    <input type="text" id="telefono" placeholder="Teléfono">
+                    <small id="errorTelefono" class="error-message"></small>
+                </div>
+            </div>
+
+            <h3>Tipo de atención</h3>
+            <div class="tipo-atencion-options">
+                <label>
+                    <input type="radio" name="tipoAtencion" id="tipoSoporte" value="Soporte sin cambio de equipo">
+                    Soporte sin cambio de equipo
+                </label>
+                <label>
+                    <input type="radio" name="tipoAtencion" id="tipoSCO" value="Cambio de equipo (SCO)">
+                    Cambio de equipo (SCO)
+                </label>
+            </div>
+
+            <h3>Series y Modelo</h3>
+            <div class="grid-2">
+                <div>
+                    <span class="series-pill">SERIE ENTRANTE</span>
+                    <input type="text" id="serieEntrante" placeholder="N° de serie del equipo entrante">
+                </div>
+                <div>
+                    <span class="series-pill">SERIE SALIENTE</span>
+                    <input type="text" id="serieSaliente" placeholder="N° de serie saliente">
+                </div>
+                <input type="text" id="modeloEquipo" placeholder="Modelo del equipo" style="grid-column: 1 / -1;">
+            </div>
+        </section>
+
+        <!-- 2. HORAS -->
+        <section class="card">
+            <h2><span class="section-icon">⏱️</span> 2. Horas</h2>
+            <p class="section-note">Se anotan en el momento, no al final.</p>
+            <div class="grid-2 grid-3">
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:6px;">Llegada</label>
+                    <input type="time" id="horaLlegada">
+                </div>
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:6px;">Inicio de trabajos</label>
+                    <input type="time" id="horaInicio">
+                </div>
+                <div>
+                    <label style="display:block;font-size:12px;font-weight:600;color:var(--gray-600);margin-bottom:6px;">Solución definitiva</label>
+                    <input type="time" id="horaSolucion">
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. DIAGNÓSTICO Y ALCANCE -->
+        <section class="card">
+            <h2><span class="section-icon">🔎</span> 3. Diagnóstico y alcance</h2>
+            <p class="section-note">Se define en sitio, con el usuario presente.</p>
+
+            <h3>Falla y diagnóstico</h3>
+            <textarea id="fallaDiagnostico" rows="3" placeholder="Describa la falla y el diagnóstico realizado..."></textarea>
+
+            <h3 style="margin-top:16px;">Origen</h3>
+            <select id="origen">
+                <option value="">Seleccione origen del problema</option>
+                <optgroup label="Con SLA">
+                    <option value="equipo_hardware" data-sla="true">Equipo / hardware</option>
+                    <option value="periferico_accesorios" data-sla="true">Periféricos (teclado, mouse, transformador)</option>
+                    <option value="sistema_operativo" data-sla="true">Sistema operativo</option>
+                    <option value="antivirus_software" data-sla="true">Antivirus / software propio del contrato</option>
+                </optgroup>
+                <optgroup label="Sin SLA">
+                    <option value="red" data-sla="false">Red</option>
+                    <option value="servidor" data-sla="false">Servidor</option>
+                    <option value="aplicaciones_terceros" data-sla="false">Aplicaciones de terceros</option>
+                    <option value="drivers_terceros" data-sla="false">Drivers de terceros incompatibles</option>
+                </optgroup>
+            </select>
+
+            <h3>Resuelve</h3>
+            <div class="resuelve-options">
+                <label><input type="radio" name="resuelve" id="resuelveMDA" value="MDA">MDA</label>
+                <label><input type="radio" name="resuelve" id="resuelveMinsal" value="Se deriva a MINSAL">Se deriva a MINSAL</label>
+            </div>
+            <div class="resuelve-detalle" id="resuelveDetalleBox">
+                <p class="resuelve-detalle-title">Si se deriva a MINSAL, complete quién y cuándo recibe el caso</p>
+                <div class="resuelve-detalle-fields">
+                    <div>
+                        <label for="resolutorNombre">Nombre del resolutor</label>
+                        <input type="text" id="resolutorNombre" placeholder="Nombre y apellido" disabled>
+                    </div>
+                    <div>
+                        <label for="resolutorHora">Hora de derivación</label>
+                        <input type="time" id="resolutorHora" disabled>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. EJECUCIÓN -->
+        <section class="card">
+            <h2><span class="section-icon">✅</span> 4. Ejecución</h2>
+            <p class="section-note">Marca cada línea al momento de hacerla.</p>
+
+            <div class="legend-box">
+                <span><b>C</b> Conforme, el usuario lo verificó</span>
+                <span><b>P</b> Pendiente por el cliente, se detalla en el punto 5</span>
+                <span><b>NA</b> No aplica a esta atención</span>
+            </div>
+            <p class="section-note" style="margin-top:-6px;">Ninguna casilla queda en blanco. Un ítem sin marcar se lee después como «no se hizo».</p>
+
+            <div class="exec-group" id="grupoA">
+                <div class="exec-group-title">A · Instalación física</div>
+                <div class="exec-group-hint">Solo si hay cambio de equipo</div>
+                <div class="exec-row" data-item="A1">
+                    <div class="exec-label"><span class="exec-code">A1</span>Desembalaje, revisión e instalación física del equipo</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_A1" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_A1" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_A1" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="A2">
+                    <div class="exec-label"><span class="exec-code">A2</span>Instalación de PC y conexión de componentes básicos (mouse, teclado y torre)</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_A2" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_A2" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_A2" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="A3">
+                    <div class="exec-label"><span class="exec-code">A3</span>Verificación de conexión adecuada a la toma de corriente</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_A3" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_A3" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_A3" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="A4">
+                    <div class="exec-label"><span class="exec-code">A4</span>Instalación y configuración de periféricos adicionales (escáner, impresora, etc.)</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_A4" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_A4" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_A4" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="A5">
+                    <div class="exec-label"><span class="exec-code">A5</span>Verificación de Etiqueta de rotulado: ID del equipo y contacto de mesa de ayuda</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_A5" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_A5" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_A5" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exec-group" id="grupoB">
+                <div class="exec-group-title">B · Configuración</div>
+                <div class="exec-group-hint">Según corresponda a la atención</div>
+                <div class="exec-row" data-item="B1">
+                    <div class="exec-label"><span class="exec-code">B1</span>Configuración y conexión a red de datos</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_B1" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_B1" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_B1" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="B2">
+                    <div class="exec-label"><span class="exec-code">B2</span>Configuración IP del equipo (en caso de IP estática)</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_B2" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_B2" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_B2" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="B3">
+                    <div class="exec-label"><span class="exec-code">B3</span>Definición y configuración del servicio de impresión</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_B3" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_B3" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_B3" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="B4">
+                    <div class="exec-label"><span class="exec-code">B4</span>Configuración de correo electrónico del usuario</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_B4" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_B4" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_B4" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="B5">
+                    <div class="exec-label"><span class="exec-code">B5</span>Habilitación cuenta Office 365</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_B5" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_B5" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_B5" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exec-group" id="grupoC">
+                <div class="exec-group-title">C · Seguridad</div>
+                <div class="exec-group-hint">Toda atención, sin excepción</div>
+                <div class="exec-row" data-item="C1">
+                    <div class="exec-label"><span class="exec-code">C1</span>Verificación de agente EDR en línea con mesa de ayuda</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_C1" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_C1" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_C1" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exec-group" id="grupoD">
+                <div class="exec-group-title">D · Usuario</div>
+                <div class="exec-group-hint">Toda atención</div>
+                <div class="exec-row" data-item="D1">
+                    <div class="exec-label"><span class="exec-code">D1</span>Demostración de operación de hardware y software instalados</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_D1" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_D1" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_D1" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="D3">
+                    <div class="exec-label"><span class="exec-code">D3</span>El usuario probó y confirmó que el problema quedó resuelto</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_D3" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_D3" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_D3" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exec-group" id="grupoE">
+                <div class="exec-group-title">E · Validación</div>
+                <div class="exec-group-hint">Se deja registrado en el reporte de diagnóstico</div>
+                <div class="exec-row" data-item="E1">
+                    <div class="exec-label"><span class="exec-code">E1</span>Número de identificación del equipo</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_E1" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_E1" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_E1" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="E2">
+                    <div class="exec-label"><span class="exec-code">E2</span>Características de configuración</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_E2" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_E2" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_E2" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="E3">
+                    <div class="exec-label"><span class="exec-code">E3</span>Detalle de diagnósticos realizados</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_E3" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_E3" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_E3" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="E4">
+                    <div class="exec-label"><span class="exec-code">E4</span>Niveles de BIOS y firmware</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_E4" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_E4" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_E4" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="E5">
+                    <div class="exec-label"><span class="exec-code">E5</span>Revisión del sistema operativo y software instalados</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_E5" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_E5" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_E5" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+                <div class="exec-row" data-item="E6">
+                    <div class="exec-label"><span class="exec-code">E6</span>Modelos y números de serie de equipo</div>
+                    <div class="radio-group">
+                        <label class="radio-pill radio-c"><input type="radio" name="item_E6" value="C"><span>C</span></label>
+                        <label class="radio-pill radio-p"><input type="radio" name="item_E6" value="P"><span>P</span></label>
+                        <label class="radio-pill radio-na"><input type="radio" name="item_E6" value="NA"><span>NA</span></label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. PENDIENTES Y DERIVACIONES -->
+        <section class="card">
+            <h2><span class="section-icon">📌</span> 5. Pendientes y derivaciones</h2>
+            <p class="section-note">Toda línea marcada P se detalla aquí. Ejemplo: «B5 · Office 365 no habilitable: la cuenta no tiene licencia asignada por MINSAL · informado por [nombre, cargo] · 11:40».</p>
+
+            <div class="pendientes-table-wrap">
+                <table class="pendientes-table">
+                    <thead>
+                        <tr>
+                            <th class="col-item">Ítem</th>
+                            <th class="col-clasificacion">Clasificación</th>
+                            <th>Causa exacta</th>
+                            <th>Informado por / derivado a</th>
+                            <th class="col-hora">Hora</th>
+                            <th class="col-remove"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="pendientesBody">
+                    </tbody>
+                </table>
+                <div class="empty-pendientes" id="pendientesVacio">Sin pendientes registrados</div>
+            </div>
+
+            <button type="button" class="btn-add-row" id="btnAddPendiente">+ Agregar pendiente</button>
+        </section>
+
+        <!-- 6. OBSERVACIONES DEL TÉCNICO -->
+        <section class="card">
+            <h2><span class="section-icon">📝</span> 6. Observaciones del técnico</h2>
+            <textarea id="observacionesTecnico" rows="5" placeholder="Escriba aquí cualquier observación adicional..."></textarea>
+        </section>
+
+        <!-- 7. CONFORMIDAD -->
+        <section class="card">
+            <h2><span class="section-icon">✔️</span> 7. Conformidad</h2>
+
+            <div class="conformidad-checks">
+                <label><input type="checkbox" id="ticketCerrado">Ticket cerrado</label>
+                <label><input type="checkbox" id="reporteAdjunto">Reporte de diagnóstico adjunto al ticket</label>
+            </div>
+
+            <div class="firma-block-title">Técnico</div>
+            <div class="grid-2">
+                <input type="text" id="tecnicoNombre" placeholder="Nombre">
+                <div>
+                    <input type="text" id="tecnicoRut" placeholder="RUT (12.345.678-9)" maxlength="12">
+                    <small id="errorTecnicoRut" class="error-message"></small>
+                </div>
+            </div>
+            <div class="firma-container">
+                <canvas id="firmaTecnico"></canvas>
+                <div class="firma-placeholder" id="firmaTecnicoPlaceholder">
+                    <span class="ph-icon">✍️</span>
+                    Firme aquí
+                </div>
+            </div>
+            <input type="hidden" id="firmaTecnicoBase64">
+            <button type="button" class="btn-limpiar" onclick="limpiarFirma('firmaTecnico')" style="margin-top:8px;"><span class="btn-limpiar-icon">↺</span> Limpiar firma</button>
+
+            <div class="firma-block-title">Usuario o referente</div>
+            <div class="grid-2">
+                <input type="text" id="referenteNombre" placeholder="Nombre">
+                <div>
+                    <input type="text" id="referenteRut" placeholder="RUT (12.345.678-9)" maxlength="12">
+                    <small id="errorReferenteRut" class="error-message"></small>
+                </div>
+            <input type="text" id="referenteCargo" placeholder="Cargo">
+            </div>
+            <div class="firma-container">
+                <canvas id="firmaReferente"></canvas>
+                <div class="firma-placeholder" id="firmaReferentePlaceholder">
+                    <span class="ph-icon">✍️</span>
+                    Firme aquí (y timbre del establecimiento)
+                </div>
+            </div>
+            <input type="hidden" id="firmaReferenteBase64">
+            <button type="button" class="btn-limpiar" onclick="limpiarFirma('firmaReferente')" style="margin-top:8px;"><span class="btn-limpiar-icon">↺</span> Limpiar firma</button>
+
+            <!-- CAMPO DE MOTIVO: Solo visible si SCO y firma referente -->
+            <div id="motivoExcepcionBox" style="display:none; margin-top:24px; padding:16px; background-color:#fff8e1; border:1px solid #ffc107; border-radius:4px;">
+                <label for="motivoFirma" style="display:block; font-weight:600; margin-bottom:8px; color:#333;">
+                    ⚠️ Motivo por el que firma el referente (obligatorio para SCO):
+                </label>
+                <textarea 
+                    id="motivoFirma" 
+                    rows="3" 
+                    placeholder="Indique por qué el usuario no firma el acta (ej: Usuario se retiró, Usuario enfermo, Rechaza firma, etc.)"
+                    style="width:100%; padding:8px; border:1px solid #ffc107; border-radius:4px; font-family:inherit;"
+                ></textarea>
+                <small style="display:block; margin-top:6px; color:#666;">
+                    Este campo es obligatorio si estamos en Cambio de Equipo (SCO) y el referente está firmando en lugar del usuario.
+                </small>
+            </div>
+
+            <p class="section-note" style="margin-top:16px;">El técnico no se retira sin firma y timbre. Si el usuario no firma, se anota el motivo y firma el referente del establecimiento como testigo.</p>
+
+            <div class="acciones-finales">
+                <button type="button" onclick="generarPDFAtencion()" class="submit-btn">
+                    📄 Generar PDF
+                </button>
+                <button type="button" id="btnNuevaAtencion" class="nueva-acta-btn" style="display:none;">
+                    🆕 Crear otro registro
+                </button>
+            </div>
+        </section>
+
+    </form>
+</div>
+
+<script src="regiones-comunas.js"></script>
+<script src="organismos.js"></script>
+<script src="atencion_template.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script src="validaciones.js"></script>
+<script src="atencion_script.js"></script>
+
+</body>
+</html>
