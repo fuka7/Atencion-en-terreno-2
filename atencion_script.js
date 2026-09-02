@@ -404,15 +404,17 @@ document.querySelectorAll('.exec-row').forEach(row => {
                     .some(inp => inp.value.trim().toUpperCase() === codigo);
                 if (!yaExiste) {
                     const nuevaFila = agregarPendiente(codigo);
-                    const clasifWrapper = nuevaFila.querySelector('.clasif-select');
-                    if (clasifWrapper) {
-                        // Pequeño delay para asegurar que la fila ya esté renderizada
-                        // y getBoundingClientRect() calcule la posición correcta.
+                    const clasifBtn = nuevaFila.querySelector('.clasif-btn');
+                    if (clasifBtn) {
+                        // Pequeño delay para asegurar que la fila ya esté renderizada.
+                        // Ya no se abre el menú automáticamente (se veía mal montado sobre
+                        // el contenido); en vez de eso se hace scroll hasta la fila y se
+                        // deja el botón resaltado (ver .clasif-btn-placeholder en el CSS)
+                        // para que quede claro que hay que hacer clic para elegir.
                         setTimeout(() => {
-                            document.querySelectorAll('.clasif-select.open').forEach(w => w.classList.remove('open'));
-                            posicionarMenuClasif(clasifWrapper);
-                            clasifWrapper.classList.add('open');
-                        }, 0);
+                            nuevaFila.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            clasifBtn.focus();
+                        }, 50);
                     }
                 }
             } else {

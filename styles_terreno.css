@@ -203,7 +203,7 @@ table.pendientes-table .col-remove {
 .clasif-btn {
     width: 100%;
     min-height: 36px;
-    border: none;
+    border: 1.5px solid transparent;
     background: #fff;
     font-family: var(--font);
     font-size: 12.5px;
@@ -211,13 +211,38 @@ table.pendientes-table .col-remove {
     text-align: left;
     white-space: normal;
     color: var(--gray-800);
-    padding: 7px 8px;
+    padding: 7px 24px 7px 8px;
     border-radius: 6px;
     cursor: pointer;
+    position: relative;
+    transition: border-color .15s, background-color .15s, box-shadow .15s;
 }
-.clasif-btn.clasif-btn-placeholder { color: var(--gray-400); }
+/* Flechita que indica que el campo es un select desplegable */
+.clasif-btn::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--gray-400);
+    border-bottom: 2px solid var(--gray-400);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+}
+.clasif-btn:hover { border-color: var(--blue-mid); }
+/* Mientras no se ha elegido una clasificación, se resalta en ámbar (mismo tono
+   que el radio "P") para que sea evidente que falta seleccionar una opción. */
+.clasif-btn.clasif-btn-placeholder {
+    color: #b47b0f;
+    background: #fff6e0;
+    border-color: #d99a1a;
+}
+.clasif-btn.clasif-btn-placeholder::after { border-color: #b47b0f; }
+.clasif-select.open .clasif-btn,
 .clasif-btn:focus {
     outline: none;
+    border-color: var(--blue);
     box-shadow: 0 0 0 2px rgba(21,96,189,0.15);
 }
 .clasif-menu {
