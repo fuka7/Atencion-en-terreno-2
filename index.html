@@ -39,7 +39,9 @@
                 </select>
                 <input type="text" id="establecimiento" placeholder="Establecimiento">
 
-                <input type="text" id="unidad" placeholder="Unidad o Depto">
+                <select id="unidad">
+                    <option value="">Seleccione Unidad / Depto</option>
+                </select>
                 <input type="text" id="direccion" placeholder="Dirección">
 
                 <select id="region">
@@ -80,7 +82,21 @@
             </div>
 
             <h3>Series y Modelo</h3>
-            <div class="grid-2">
+            
+            <!-- Opción 1: SOPORTE (una sola serie) -->
+            <div id="seriesSoporte" class="grid-2" style="display:none;">
+                <div>
+                    <span class="series-pill">SERIE</span>
+                    <input type="text" id="serieSoporteEquipo" placeholder="N° de serie del equipo">
+                </div>
+                <div>
+                    <span class="series-pill">MODELO</span>
+                    <input type="text" id="modeloEquipoSoporte" placeholder="Modelo del equipo">
+                </div>
+            </div>
+            
+            <!-- Opción 2: SCO (dos series) -->
+            <div id="seriesSCO" class="grid-2">
                 <div>
                     <span class="series-pill">SERIE ENTRANTE</span>
                     <input type="text" id="serieEntrante" placeholder="N° de serie del equipo entrante">
@@ -414,7 +430,7 @@
                     <input type="text" id="referenteRut" placeholder="RUT (12.345.678-9)" maxlength="12">
                     <small id="errorReferenteRut" class="error-message"></small>
                 </div>
-            <input type="text" id="referenteCargo" placeholder="Cargo">
+                <input type="text" id="referenteCargo" placeholder="Cargo">
             </div>
             <div class="firma-container">
                 <canvas id="firmaReferente"></canvas>
@@ -465,6 +481,5 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 <script src="validaciones.js"></script>
 <script src="atencion_script.js"></script>
-
 </body>
 </html>

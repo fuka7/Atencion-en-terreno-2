@@ -174,6 +174,14 @@ function generarContenidoAtencion(data) {
             ${box(data.tipoAtencion === 'Cambio de equipo (SCO)')} Cambio de equipo (SCO)
           </td>
         </tr>
+        ${data.tipoAtencion === 'Soporte sin cambio de equipo' ? `
+        <tr>
+          <td class="lc">Serie del equipo</td>
+          <td>${val(data.serieSoporteEquipo)}</td>
+          <td class="lc">Modelo del equipo</td>
+          <td>${val(data.modeloEquipoSoporte)}</td>
+        </tr>
+        ` : `
         <tr>
           <td class="lc">Serie del equipo / entrante</td>
           <td>${val(data.serieEntrante)}</td>
@@ -184,6 +192,7 @@ function generarContenidoAtencion(data) {
           <td class="lc">Modelo del equipo</td>
           <td colspan="3">${val(data.modeloEquipo)}</td>
         </tr>
+        `}
       </table>
 
       <div class="spacer"></div>

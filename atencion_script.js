@@ -1,6 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-// ================= SELECTS: REGIÓN / ORGANISMO / COMUNA =================
+// ================= UNIDADES / DEPARTAMENTOS =================
+
+const unidadesSalud = [
+    "Urgencia",
+    "Urgencia Pediátrica",
+    "Unidad de Cuidados Intensivos (UCI)",
+    "Unidad de Cuidados Intermedios (UCIM)",
+    "Hospitalización General",
+    "Hospitalización Pediátrica",
+    "Maternidad",
+    "Cirugía",
+    "Medicina Interna",
+    "Cardiología",
+    "Neurología",
+    "Oftalmología",
+    "Otorrinolaringología",
+    "Pediatría",
+    "Ginecología",
+    "Urología",
+    "Traumatología",
+    "Oncología",
+    "Psiquiatría",
+    "Farmacia",
+    "Laboratorio",
+    "Imagenología",
+    "Central de Esterilización",
+    "Administración",
+    "Dirección",
+    "Recursos Humanos",
+    "Finanzas",
+    "Informática / TI",
+    "Mantenimiento"
+];
+
+const unidadSelect = document.getElementById("unidad");
+
+// Limpiar TODAS las opciones y empezar de cero
+unidadSelect.innerHTML = '';
+
+// Agregar opción placeholder
+const optionPlaceholder = document.createElement("option");
+optionPlaceholder.value = '';
+optionPlaceholder.textContent = 'Seleccione Unidad / Depto';
+optionPlaceholder.disabled = false;
+unidadSelect.appendChild(optionPlaceholder);
+
+// Inicializar unidades al cargar (SIN sort para mantener orden lógico)
+unidadesSalud.forEach(unidad => {
+    const option = document.createElement("option");
+    option.value = unidad;
+    option.textContent = unidad;
+    unidadSelect.appendChild(option);
+});
 
 const organismoSelect = document.getElementById("organismo");
 const regionSelect    = document.getElementById("region");
@@ -88,7 +140,9 @@ function actualizarGrupoA() {
     grupoA.classList.toggle('disabled-group', esSoporte);
     const radiosA = grupoA.querySelectorAll('input[type="radio"]');
     radiosA.forEach(r => { r.disabled = esSoporte; });
+    
     if (esSoporte) {
+        // Si es SOPORTE: marcar NA en todos los items
         ['A1','A2','A3','A4','A5'].forEach(codigo => {
             const na = grupoA.querySelector(`input[name="item_${codigo}"][value="NA"]`);
             if (na && !na.checked) {
@@ -98,6 +152,14 @@ function actualizarGrupoA() {
                 });
                 eliminarPendientePorCodigoItem(codigo);
             }
+        });
+    } else {
+        // Si es SCO: desmarcar NA (dejar sin seleccionar)
+        ['A1','A2','A3','A4','A5'].forEach(codigo => {
+            grupoA.querySelectorAll(`input[name="item_${codigo}"]`).forEach(r => {
+                r.checked = false;
+                r.disabled = false;
+            });
         });
     }
 }
@@ -143,6 +205,43 @@ function actualizarVisibilidadMotivo() {
 
 // Inicializar estado al cargar
 actualizarVisibilidadMotivo();
+
+
+// ================= DEV-ADICIONAL: MOSTRAR/OCULTAR SERIES SEGÚN TIPO ATENCIÓN =================
+
+function actualizarVisibilidadSeries() {
+    const tipoAtencionEl = document.querySelector('input[name="tipoAtencion"]:checked');
+    const seriesSoporteDiv = document.getElementById('seriesSoporte');
+    const seriesSCODiv = document.getElementById('seriesSCO');
+    
+    if (tipoAtencionEl && tipoAtencionEl.value === 'Soporte sin cambio de equipo') {
+        // Mostrar solo serie de Soporte
+        seriesSoporteDiv.style.display = 'grid';
+        seriesSCODiv.style.display = 'none';
+        // Limpiar valores de SCO
+        document.getElementById('serieEntrante').value = '';
+        document.getElementById('serieSaliente').value = '';
+        document.getElementById('modeloEquipo').value = '';
+    } else if (tipoAtencionEl && tipoAtencionEl.value === 'Cambio de equipo (SCO)') {
+        // Mostrar ambas series (SCO)
+        seriesSoporteDiv.style.display = 'none';
+        seriesSCODiv.style.display = 'grid';
+        // Limpiar valor de Soporte
+        document.getElementById('serieSoporteEquipo').value = '';
+        document.getElementById('modeloEquipoSoporte').value = '';
+    } else {
+        // Por defecto, mostrar SCO (como está ahora)
+        seriesSoporteDiv.style.display = 'none';
+        seriesSCODiv.style.display = 'grid';
+    }
+}
+
+// Listeners para cambios en tipo de atención
+tipoSoporte.addEventListener('change', actualizarVisibilidadSeries);
+tipoSCO.addEventListener('change', actualizarVisibilidadSeries);
+
+// Inicializar estado al cargar
+actualizarVisibilidadSeries();
 
 
 // ================= TABLA DE PENDIENTES Y DERIVACIONES =================
@@ -557,7 +656,25 @@ window.generarPDFAtencion = async function () {
     }
     // Para "Soporte sin cambio de equipo": se mantiene comportamiento actual (sin restricción)
 
-    // Capturar origen y su flag de SLA
+    // Capturar series según tipo de atención
+    let serieEquipo = '';
+    let modeloEquipo = '';
+    let serieEntrante = '';
+    let serieSaliente = '';
+    
+    if (tipoAtencionEl && tipoAtencionEl.value === 'Soporte sin cambio de equipo') {
+        // Soporte: una sola serie
+        serieEquipo = g('serieSoporteEquipo');
+        modeloEquipo = g('modeloEquipoSoporte');
+        serieEntrante = '';
+        serieSaliente = '';
+    } else {
+        // SCO: dos series
+        serieEquipo = '';
+        modeloEquipo = g('modeloEquipo');
+        serieEntrante = g('serieEntrante');
+        serieSaliente = g('serieSaliente');
+    }
     const origenSelect = document.getElementById('origen');
     const origenValor = origenSelect?.value || '';
     const origenOption = origenSelect?.options[origenSelect.selectedIndex];
@@ -606,9 +723,12 @@ window.generarPDFAtencion = async function () {
         cargoUsuario: g('cargoUsuario'),
         emailUsuario: g('emailUsuario'),
         tipoAtencion: tipoAtencionEl ? tipoAtencionEl.value : '',
-        serieEntrante: g('serieEntrante'),
-        serieSaliente: g('serieSaliente'),
-        modeloEquipo: g('modeloEquipo'),
+        serieEquipo: serieEquipo,         // Para Soporte
+        serieSoporteEquipo: g('serieSoporteEquipo'),  // Para captura Soporte
+        serieEntrante: serieEntrante,     // Para SCO
+        serieSaliente: serieSaliente,     // Para SCO
+        modeloEquipo: modeloEquipo,       // Actualizado según tipo
+        modeloEquipoSoporte: g('modeloEquipoSoporte'),  // Para captura Soporte
         horaLlegada: g('horaLlegada'),
         horaInicio: g('horaInicio'),
         horaSolucion: g('horaSolucion'),
@@ -737,6 +857,7 @@ activarValidacionEmail("emailUsuario", "errorEmailUsuario");
 activarValidacionTelefono("telefono", "errorTelefono");
 activarValidacionRut("tecnicoRut", "errorTecnicoRut");
 activarValidacionRut("referenteRut", "errorReferenteRut");
-activarAutocompleteUnidad("unidad");
+// COMENTADO: Ya tenemos un select normal para unidad, no autocomplete
+// activarAutocompleteUnidad("unidad");
 
 });
