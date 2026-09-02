@@ -188,23 +188,82 @@ resuelveMDA.addEventListener('change', actualizarResuelve);
 resuelveMinsal.addEventListener('change', actualizarResuelve);
 
 
-// ================= DEV-03: VISIBILIDAD DE CAMPO MOTIVO (FIRMA CONDICIONADA) =================
+// ================= DEV-03: ROL DEL FIRMANTE Y VISIBILIDAD ENCADENADA =================
+// El selector de rol (quienFirmaBox) aparece con SCO; el motivo aparece solo
+// si además el rol elegido es "referente" (el usuario dueño del equipo no
+// firmó y alguien más lo hizo en su lugar).
+
+const esSCO = () => {
+    const el = document.querySelector('input[name="tipoAtencion"]:checked');
+    return !!el && el.value === 'Cambio de equipo (SCO)';
+};
+
+const getQuienFirma = () => {
+    const el = document.querySelector('input[name="quienFirma"]:checked');
+    return el ? el.value : '';
+};
 
 function actualizarVisibilidadMotivo() {
-    const tipoAtencionEl = document.querySelector('input[name="tipoAtencion"]:checked');
-    const motivoBox = document.getElementById('motivoExcepcionBox');
-    
-    // Mostrar el campo de motivo solo si estamos en SCO
-    if (tipoAtencionEl && tipoAtencionEl.value === 'Cambio de equipo (SCO)') {
-        motivoBox.style.display = 'block';
-    } else {
-        motivoBox.style.display = 'none';
-        document.getElementById('motivoFirma').value = ''; // Limpiar si cambia a Soporte
+    const sco = esSCO();
+    document.getElementById('quienFirmaBox').style.display = sco ? 'flex' : 'none';
+
+    const mostrarMotivo = sco && getQuienFirma() === 'referente';
+    document.getElementById('motivoExcepcionBox').style.display = mostrarMotivo ? 'block' : 'none';
+    if (!mostrarMotivo) document.getElementById('motivoFirma').value = '';
+
+    if (!sco) {
+        document.querySelectorAll('input[name="quienFirma"]').forEach(r => r.checked = false);
     }
 }
+document.querySelectorAll('input[name="tipoAtencion"], input[name="quienFirma"]')
+    .forEach(r => r.addEventListener('change', actualizarVisibilidadMotivo));
 
 // Inicializar estado al cargar
 actualizarVisibilidadMotivo();
+
+
+// ================= DEV-03: VALIDACIÓN ÚNICA DE FIRMA SCO =================
+// Reutilizable en los dos puntos de control (Ticket cerrado y Generar PDF),
+// para que la regla de negocio viva en un único lugar.
+// Devuelve null si está OK; si no, { foco, mensaje }.
+function validarFirmaSCO() {
+    if (!esSCO()) return null; // Soporte sin cambio de equipo: sin restricción
+
+    const quien = getQuienFirma();
+    if (!quien) {
+        return {
+            foco: 'quienFirmaBox',
+            mensaje: 'Cambio de Equipo (SCO): indique quién firma el acta, ' +
+                     'el usuario dueño del equipo o el referente del establecimiento.'
+        };
+    }
+    if (capturarFirma('firmaReferente') === '') {
+        return {
+            foco: 'firmaReferente',
+            mensaje: 'Cambio de Equipo (SCO): falta la firma de conformidad.'
+        };
+    }
+    if (quien === 'referente' && !document.getElementById('motivoFirma').value.trim()) {
+        return {
+            foco: 'motivoExcepcionBox',
+            mensaje: 'Cambio de Equipo (SCO): si el referente firma en lugar ' +
+                     'del usuario dueño del equipo, debe indicar el motivo.'
+        };
+    }
+    return null;
+}
+
+// Punto de control 1: al marcar "Ticket cerrado" (bloqueo duro, mismo patrón
+// ya usado en el resto del formulario: alert + scrollIntoView + revertir).
+document.getElementById('ticketCerrado').addEventListener('change', function () {
+    if (!this.checked) return;
+    const falla = validarFirmaSCO();
+    if (falla) {
+        this.checked = false;
+        alert(falla.mensaje);
+        document.getElementById(falla.foco).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
 
 
 // ================= DEV-ADICIONAL: MOSTRAR/OCULTAR SERIES SEGÚN TIPO ATENCIÓN =================
@@ -612,6 +671,7 @@ function resetFormAtencion() {
     ['firmaTecnico','firmaReferente'].forEach(id => window.limpiarFirma(id));
     actualizarGrupoA();
     actualizarResuelve();
+    actualizarVisibilidadMotivo(); // corrige H-4: si venía de un SCO, oculta rol/motivo tras el reset
     Array.from(document.querySelectorAll('#registroForm .input-error, #registroForm .input-valid'))
         .forEach(el => el.classList.remove('input-error', 'input-valid'));
     ['errorRutResponsable','errorEmailUsuario','errorTelefono','errorTecnicoRut','errorReferenteRut']
@@ -632,31 +692,16 @@ window.generarPDFAtencion = async function () {
     const resuelveEl     = document.querySelector('input[name="resuelve"]:checked');
 
     // ========== VALIDACIÓN DEV-03: Firma condicionada a tipo de atención ==========
-    // Si es SCO (Cambio de equipo): la firma del usuario es lo esperado.
-    // Si firma el referente en su lugar → el motivo es OBLIGATORIO
-    if (tipoAtencionEl && tipoAtencionEl.value === 'Cambio de equipo (SCO)') {
-        const firmaTecnicoCanvas = document.getElementById('firmaTecnico');
-        const firmaReferenteCanvas = document.getElementById('firmaReferente');
-        
-        // Detectar si hay firma en técnico y en referente
-        const tieneFirmaTecnico = firmaTecnicoCanvas && firmaTecnicoCanvas.toDataURL() !== 'data:,';
-        const tieneFirmaReferente = firmaReferenteCanvas && firmaReferenteCanvas.toDataURL() !== 'data:,';
-        
-        // Si no hay firma de técnico pero sí de referente → referente está firmando en su lugar
-        if (!tieneFirmaTecnico && tieneFirmaReferente) {
-            const motivo = g('motivoFirma').trim();
-            if (!motivo) {
-                alert(
-                    '⚠️ Para Cambio de Equipo (SCO):\n\n' +
-                    'Si el referente firma en lugar del usuario, debe indicar el motivo.\n\n' +
-                    'Complete el campo "Motivo por el que firma el referente" en la sección de Conformidad.'
-                );
-                document.getElementById('motivoExcepcionBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
+    // Defensa por si se marca "Ticket cerrado" antes de completar los datos:
+    // misma regla que valida el checkbox, vía la función única validarFirmaSCO().
+    {
+        const falla = validarFirmaSCO();
+        if (falla) {
+            alert(falla.mensaje);
+            document.getElementById(falla.foco).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
         }
     }
-    // Para "Soporte sin cambio de equipo": se mantiene comportamiento actual (sin restricción)
 
     // Capturar series según tipo de atención
     let serieEquipo = '';
@@ -753,6 +798,7 @@ window.generarPDFAtencion = async function () {
         referenteRut: g('referenteRut'),
         referenteCargo: g('referenteCargo'),
         firmaReferente: capturarFirma('firmaReferente'),
+        quienFirma: getQuienFirma(), // 'usuario' | 'referente' | '' (DEV-03)
         motivoFirma: g('motivoFirma'),  // ← NUEVO (DEV-03): Motivo si referente firma en SCO
     };
 

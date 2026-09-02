@@ -93,14 +93,15 @@ function generarContenidoAtencion(data) {
       }
 
       .at-horas-row td {
-        height: 46px;
-        font-size: 13px;
+        height: 24px;
+        font-size: 12px;
         text-align: center;
         vertical-align: middle;
       }
 
       .firma-area { height: 70px; padding: 4px 7px; vertical-align: middle; }
       .firma-area img { width: 150px; height: 55px; object-fit: contain; object-position: left center; display: block; }
+      .avoid-break { page-break-inside: avoid; break-inside: avoid; }
       .at-footer { text-align: center; font-size: 10px; color: #888; margin-top: 14px; padding-top: 8px; border-top: 1px solid #ccc; }
       .obs-box { border: 1px solid #ccc; padding: 6px 8px; min-height: 70px; white-space: pre-wrap; font-size: 11px; background: #fafafa; }
       .page-break { page-break-before: always; break-before: page; }
@@ -295,6 +296,69 @@ function generarContenidoAtencion(data) {
       <!-- 7. CONFORMIDAD -->
       <table>
         <tr class="section-header"><td colspan="2"><strong>7. Conformidad</strong></td></tr>
+      </table>
+      <div class="at-note" style="margin-top:4px;">El técnico no se retira sin firma y timbre. Si el usuario no firma, se anota el motivo y firma el referente del establecimiento como testigo.</div>
+
+      <div class="spacer"></div>
+
+      <div class="avoid-break">
+      <table>
+        <tr class="section-header"><td colspan="2"><strong>Usuario o referente</strong></td></tr>
+        <tr>
+          <td class="lc">Nombre</td>
+          <td>${val(data.referenteNombre)}</td>
+        </tr>
+        <tr>
+          <td class="lc">RUT</td>
+          <td>${val(data.referenteRut)}</td>
+        </tr>
+        <tr>
+          <td class="lc">Cargo</td>
+          <td>${val(data.referenteCargo)}</td>
+        </tr>
+        <tr>
+          <td class="lc">Firma</td>
+          <td class="firma-area">${data.firmaReferente ? `<img src="${data.firmaReferente}" alt="firma referente">` : ''}</td>
+        </tr>
+      </table>
+
+      ${data.quienFirma ? `
+      <div style="margin-top:10px; font-size:13px; color:#333;">
+        <strong>Firmó el acta:</strong> ${data.quienFirma === 'referente' ? 'Referente del establecimiento' : 'Usuario dueño del equipo'}
+      </div>
+      ` : ''}
+
+      ${data.motivoFirma ? `
+      <div style="margin-top:12px; padding:12px; background-color:#fff8e1; border:1px solid #ffc107; border-radius:4px;">
+        <strong>Motivo por el que firma el referente (SCO):</strong>
+        <p style="margin:8px 0 0 0; line-height:1.5;">${val(data.motivoFirma)}</p>
+      </div>
+      ` : ''}
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="avoid-break">
+      <table>
+        <tr class="section-header"><td colspan="2"><strong>Técnico</strong></td></tr>
+        <tr>
+          <td class="lc">Nombre</td>
+          <td>${val(data.tecnicoNombre)}</td>
+        </tr>
+        <tr>
+          <td class="lc">RUT</td>
+          <td>${val(data.tecnicoRut)}</td>
+        </tr>
+        <tr>
+          <td class="lc">Firma</td>
+          <td class="firma-area">${data.firmaTecnico ? `<img src="${data.firmaTecnico}" alt="firma técnico">` : ''}</td>
+        </tr>
+      </table>
+      </div>
+
+      <div class="spacer"></div>
+
+      <table>
         <tr>
           <td colspan="2">
             ${box(data.ticketCerrado)} Ticket cerrado &nbsp;&nbsp;&nbsp;
@@ -303,46 +367,6 @@ function generarContenidoAtencion(data) {
         </tr>
       </table>
 
-      <div class="spacer"></div>
-
-      <table>
-        <tr class="section-header"><td colspan="2"><strong>Técnico</strong></td><td class="section-header" colspan="2"><strong>Usuario o referente</strong></td></tr>
-        <tr>
-          <td class="lc">Nombre</td>
-          <td>${val(data.tecnicoNombre)}</td>
-          <td class="lc">Nombre</td>
-          <td>${val(data.referenteNombre)}</td>
-        </tr>
-        <tr>
-          <td class="lc">RUT</td>
-          <td>${val(data.tecnicoRut)}</td>
-          <td class="lc">RUT</td>
-          <td>${val(data.referenteRut)}</td>
-        </tr>
-        <tr>
-          <td class="lc">&nbsp;</td>
-          <td>&nbsp;</td>
-          <td class="lc">Cargo</td>
-          <td>${val(data.referenteCargo)}</td>
-        </tr>
-        <tr>
-          <td class="lc">Firma</td>
-          <td class="firma-area">${data.firmaTecnico ? `<img src="${data.firmaTecnico}" alt="firma técnico">` : ''}</td>
-          <td class="lc">Firma</td>
-          <td class="firma-area">${data.firmaReferente ? `<img src="${data.firmaReferente}" alt="firma referente">` : ''}</td>
-        </tr>
-      </table>
-      
-      ${data.motivoFirma ? `
-      <div style="margin-top:12px; padding:12px; background-color:#fff8e1; border:1px solid #ffc107; border-radius:4px;">
-        <strong>Motivo por el que firma el referente (SCO):</strong>
-        <p style="margin:8px 0 0 0; line-height:1.5;">${val(data.motivoFirma)}</p>
-      </div>
-      ` : ''}
-      
-      <div class="at-note">El técnico no se retira sin firma y timbre. Si el usuario no firma, se anota el motivo y firma el referente del establecimiento como testigo.</div>
-
-      <!-- PIE -->
       <div class="at-footer">
         Ministerio de Salud — Chile &nbsp;|&nbsp; Proyecto MINSAL 2026 &nbsp;|&nbsp; Mesa de Ayuda HP / MINSAL
       </div>

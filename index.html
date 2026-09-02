@@ -399,31 +399,13 @@
         <!-- 7. CONFORMIDAD -->
         <section class="card">
             <h2><span class="section-icon">✔️</span> 7. Conformidad</h2>
-
-            <div class="conformidad-checks">
-                <label><input type="checkbox" id="ticketCerrado">Ticket cerrado</label>
-                <label><input type="checkbox" id="reporteAdjunto">Reporte de diagnóstico adjunto al ticket</label>
-            </div>
-
-            <div class="firma-block-title">Técnico</div>
-            <div class="grid-2">
-                <input type="text" id="tecnicoNombre" placeholder="Nombre">
-                <div>
-                    <input type="text" id="tecnicoRut" placeholder="RUT (12.345.678-9)" maxlength="12">
-                    <small id="errorTecnicoRut" class="error-message"></small>
-                </div>
-            </div>
-            <div class="firma-container">
-                <canvas id="firmaTecnico"></canvas>
-                <div class="firma-placeholder" id="firmaTecnicoPlaceholder">
-                    <span class="ph-icon">✍️</span>
-                    Firme aquí
-                </div>
-            </div>
-            <input type="hidden" id="firmaTecnicoBase64">
-            <button type="button" class="btn-limpiar" onclick="limpiarFirma('firmaTecnico')" style="margin-top:8px;"><span class="btn-limpiar-icon">↺</span> Limpiar firma</button>
+            <p class="section-note">El técnico no se retira sin firma y timbre. Si el usuario no firma, se anota el motivo y firma el referente del establecimiento como testigo.</p>
 
             <div class="firma-block-title">Usuario o referente</div>
+            <div id="quienFirmaBox" class="tipo-atencion-options" style="display:none;">
+                <label><input type="radio" name="quienFirma" value="usuario"> Usuario dueño del equipo</label>
+                <label><input type="radio" name="quienFirma" value="referente"> Referente del establecimiento</label>
+            </div>
             <div class="grid-2">
                 <input type="text" id="referenteNombre" placeholder="Nombre">
                 <div>
@@ -458,7 +440,28 @@
                 </small>
             </div>
 
-            <p class="section-note" style="margin-top:16px;">El técnico no se retira sin firma y timbre. Si el usuario no firma, se anota el motivo y firma el referente del establecimiento como testigo.</p>
+            <div class="firma-block-title" style="margin-top:24px;">Técnico</div>
+            <div class="grid-2">
+                <input type="text" id="tecnicoNombre" placeholder="Nombre">
+                <div>
+                    <input type="text" id="tecnicoRut" placeholder="RUT (12.345.678-9)" maxlength="12">
+                    <small id="errorTecnicoRut" class="error-message"></small>
+                </div>
+            </div>
+            <div class="firma-container">
+                <canvas id="firmaTecnico"></canvas>
+                <div class="firma-placeholder" id="firmaTecnicoPlaceholder">
+                    <span class="ph-icon">✍️</span>
+                    Firme aquí
+                </div>
+            </div>
+            <input type="hidden" id="firmaTecnicoBase64">
+            <button type="button" class="btn-limpiar" onclick="limpiarFirma('firmaTecnico')" style="margin-top:8px;"><span class="btn-limpiar-icon">↺</span> Limpiar firma</button>
+
+            <div class="conformidad-checks" style="margin-top:24px;">
+                <label><input type="checkbox" id="ticketCerrado">Ticket cerrado</label>
+                <label><input type="checkbox" id="reporteAdjunto">Reporte de diagnóstico adjunto al ticket</label>
+            </div>
 
             <div class="acciones-finales">
                 <button type="button" onclick="generarPDFAtencion()" class="submit-btn">
