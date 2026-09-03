@@ -224,6 +224,9 @@ function actualizarGrupoA() {
 tipoSoporte.addEventListener('change', actualizarGrupoA);
 tipoSCO.addEventListener('change', actualizarGrupoA);
 
+// Inicializar estado al cargar (por si Chrome restaura el radio "Soporte" marcado tras F5 sin disparar 'change')
+actualizarGrupoA();
+
 
 // ================= RESUELVE → HABILITA CAMPOS DE DERIVACIÓN =================
 
