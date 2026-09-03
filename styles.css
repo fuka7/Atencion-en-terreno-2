@@ -759,4 +759,105 @@ textarea {
     display: none;
 }
 
+/* ===== ALERTA / TOAST PERSONALIZADA (reemplazo de alert() nativo) ===== */
+.app-toast-layer {
+    position: fixed;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+    padding: 0 16px;
+    pointer-events: none;
+}
+
+.app-toast {
+    pointer-events: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: white;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    box-shadow: var(--shadow-lg);
+    padding: 14px 16px;
+    font-family: var(--font);
+    opacity: 0;
+    transform: translateY(-14px) scale(0.98);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.app-toast.app-toast--show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.app-toast.app-toast--hide {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+}
+
+.app-toast--error   { border-left-color: var(--red); }
+.app-toast--warning { border-left-color: #c98a12; }
+.app-toast--success { border-left-color: var(--green); }
+
+.app-toast-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--red-light);
+    color: var(--red);
+    margin-top: 1px;
+}
+.app-toast--warning .app-toast-icon { background: #fdf1dc; color: #c98a12; }
+.app-toast--success .app-toast-icon { background: var(--green-light); color: var(--green); }
+
+.app-toast-icon svg { width: 13px; height: 13px; }
+
+.app-toast-body { flex: 1; min-width: 0; }
+
+.app-toast-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 2px;
+}
+
+.app-toast-message {
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--gray-600);
+}
+
+.app-toast-close {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: transparent;
+    color: var(--gray-400);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1;
+    padding: 0;
+}
+.app-toast-close:hover { background: var(--gray-100); color: var(--gray-600); }
+
+@media (max-width: 480px) {
+    .app-toast-layer { top: 12px; padding: 0 10px; max-width: 100%; }
+}
+
 @media print { button { display: none; } }

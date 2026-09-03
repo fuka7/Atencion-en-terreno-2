@@ -1,5 +1,63 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+// ================= ALERTA PERSONALIZADA (reemplazo de alert() nativo) =================
+// Muestra un toast con el estilo visual de la app en vez del alert() del
+// navegador. Uso: mostrarAlerta('mensaje') o mostrarAlerta('mensaje', 'warning'|'success').
+
+const ICONOS_TOAST = {
+    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+    warning: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 L22 20 L2 20 Z"></path><line x1="12" y1="9" x2="12" y2="14"></line><line x1="12" y1="17" x2="12" y2="17.01"></line></svg>',
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+};
+
+const TITULOS_TOAST = {
+    error: 'Falta completar',
+    warning: 'Atención',
+    success: 'Listo'
+};
+
+function obtenerCapaToast() {
+    let capa = document.getElementById('appToastLayer');
+    if (!capa) {
+        capa = document.createElement('div');
+        capa.id = 'appToastLayer';
+        capa.className = 'app-toast-layer';
+        document.body.appendChild(capa);
+    }
+    return capa;
+}
+
+window.mostrarAlerta = function (mensaje, tipo) {
+    tipo = tipo === 'warning' || tipo === 'success' ? tipo : 'error';
+    const capa = obtenerCapaToast();
+
+    const toast = document.createElement('div');
+    toast.className = 'app-toast app-toast--' + tipo;
+    toast.innerHTML =
+        '<div class="app-toast-icon">' + ICONOS_TOAST[tipo] + '</div>' +
+        '<div class="app-toast-body">' +
+            '<div class="app-toast-title">' + TITULOS_TOAST[tipo] + '</div>' +
+            '<div class="app-toast-message"></div>' +
+        '</div>' +
+        '<button type="button" class="app-toast-close" aria-label="Cerrar">×</button>';
+    toast.querySelector('.app-toast-message').textContent = mensaje;
+
+    capa.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add('app-toast--show'));
+
+    let cerrado = false;
+    const cerrar = () => {
+        if (cerrado) return;
+        cerrado = true;
+        toast.classList.remove('app-toast--show');
+        toast.classList.add('app-toast--hide');
+        toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+    };
+
+    toast.querySelector('.app-toast-close').addEventListener('click', cerrar);
+    setTimeout(cerrar, 6000);
+};
+
 // ================= UNIDADES / DEPARTAMENTOS =================
 
 const unidadesSalud = [
@@ -256,7 +314,7 @@ document.getElementById('ticketCerrado').addEventListener('change', function () 
     const falla = validarFirmaSCO();
     if (falla) {
         this.checked = false;
-        alert(falla.mensaje);
+        mostrarAlerta(falla.mensaje);
         document.getElementById(falla.foco).scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 });
@@ -693,7 +751,7 @@ window.generarPDFAtencion = async function () {
     {
         const falla = validarFirmaSCO();
         if (falla) {
-            alert(falla.mensaje);
+            mostrarAlerta(falla.mensaje);
             document.getElementById(falla.foco).scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
         }
@@ -886,7 +944,7 @@ window.generarPDFAtencion = async function () {
         mostrarBotonNuevaAtencion();
     } catch (err) {
         console.error('Error creando PDF:', err);
-        alert('Ocurrió un problema generando el PDF. Intente nuevamente.');
+        mostrarAlerta('Ocurrió un problema generando el PDF. Intente nuevamente.');
     } finally {
         try { if (document.body.contains(wrapper)) document.body.removeChild(wrapper); } catch(e){}
         try { if (document.body.contains(overlay)) document.body.removeChild(overlay); } catch(e){}
