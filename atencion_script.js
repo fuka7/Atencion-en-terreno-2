@@ -166,10 +166,6 @@ function actualizarGrupoA() {
 tipoSoporte.addEventListener('change', actualizarGrupoA);
 tipoSCO.addEventListener('change', actualizarGrupoA);
 
-// Agregar actualización de visibilidad de campo de motivo (DEV-03)
-tipoSoporte.addEventListener('change', actualizarVisibilidadMotivo);
-tipoSCO.addEventListener('change', actualizarVisibilidadMotivo);
-
 
 // ================= RESUELVE → HABILITA CAMPOS DE DERIVACIÓN =================
 
