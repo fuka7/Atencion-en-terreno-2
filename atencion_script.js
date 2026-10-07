@@ -799,7 +799,7 @@ window.generarPDFAtencion = async function () {
     const origenTexto = origenLabels[origenValor] || '';
 
     const items = {};
-    ['A1','A2','A3','A4','A5','B1','B2','B3','B4','B5','C1','D1','D3','E1','E2','E3','E4','E5','E6'].forEach(codigo => {
+    ['A1','A2','A3','A4','A5','B1','B2','B3','B4','B5','C1','D1','D2','E1','E2','E3','E4','E5','E6'].forEach(codigo => {
         const marcado = document.querySelector(`input[name="item_${codigo}"]:checked`);
         items[codigo] = marcado ? marcado.value : '';
     });

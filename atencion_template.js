@@ -15,7 +15,7 @@ function generarContenidoAtencion(data) {
     : '<span class="at-chk-box"></span>';
 
   const execRow = (codigo, texto, valorItem) => `
-    <tr>
+    <tr class="avoid-break">
       <td class="at-code">${codigo}</td>
       <td>${texto}</td>
       <td class="at-c">${cell(valorItem, 'C')}</td>
@@ -82,6 +82,7 @@ function generarContenidoAtencion(data) {
       .at-exec-table td.at-code { width: 26px; font-weight: bold; text-align:center; }
       .at-exec-table td.at-c { width: 30px; text-align: center; }
       .at-exec-table .group-title td { background: #e8e8e8; font-weight: bold; font-style: italic; }
+      .at-exec-table tr { page-break-inside: avoid; break-inside: avoid; }
 
       .at-legend { font-size: 10px; color: #333; margin: 6px 0; }
       .at-legend b { margin-right: 4px; }
@@ -263,7 +264,7 @@ function generarContenidoAtencion(data) {
         ${execRow('C1', 'Verificación de agente EDR en línea con mesa de ayuda', data.items.C1)}
         <tr class="group-title"><td colspan="5">D · Usuario — toda atención</td></tr>
         ${execRow('D1', 'Demostración de operación de hardware y software instalados', data.items.D1)}
-        ${execRow('D3', 'El usuario probó y confirmó que el problema quedó resuelto', data.items.D3)}
+        ${execRow('D2', 'El usuario probó y confirmó que el problema quedó resuelto', data.items.D2)}
         <tr class="group-title"><td colspan="5">E · Validación — se deja registrado en el reporte de diagnóstico</td></tr>
         ${execRow('E1', 'Número de identificación del equipo', data.items.E1)}
         ${execRow('E2', 'Características de configuración', data.items.E2)}
