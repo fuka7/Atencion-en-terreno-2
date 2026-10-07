@@ -6,7 +6,7 @@ const regionesComunas = {
   "Antofagasta": ["Antofagasta","Mejillones","Sierra Gorda","Taltal","Calama","Ollagüe","San Pedro de Atacama","Tocopilla","María Elena"],
   "Atacama": ["Copiapó","Caldera","Tierra Amarilla","Chañaral","Diego de Almagro","Vallenar","Freirina","Huasco","Alto del Carmen"],
   "Coquimbo": ["La Serena","Coquimbo","Andacollo","La Higuera","Paihuano","Vicuña","Illapel","Canela","Los Vilos","Salamanca","Ovalle","Combarbalá","Monte Patria","Punitaqui","Río Hurtado"],
-  "Valparaíso": ["Valparaíso","Viña del Mar","Concón","Quilpué","Villa Alemana","Casablanca","Juan Fernández","Puchuncaví","Quintero","Algarrobo","Cartagena","El Quisco","El Tabo","San Antonio","Santo Domingo","La Ligua","Cabildo","Papudo","Petorca","Zapallar","Quillota","La Calera","Hijuelas","La Cruz","Nogales","Los Andes","Calle Larga","Rinconada","San Esteban","San Felipe","Catemu","Llaillay","Panquehue","Putaendo","Santa María"],
+  "Valparaíso": ["Valparaíso","Viña del Mar","Concón","Quilpué","Villa Alemana","Casablanca","Juan Fernández","Puchuncaví","Quintero","Algarrobo","Cartagena","El Quisco","El Tabo","San Antonio","Santo Domingo","La Ligua","Cabildo","Papudo","Petorca","Zapallar","Quillota","La Calera","Hijuelas","La Cruz","Nogales","Limache","Los Andes","Calle Larga","Rinconada","San Esteban","San Felipe","Catemu","Llaillay","Panquehue","Putaendo","Santa María"],
   "Metropolitana de Santiago": [
     "Cerrillos","Cerro Navia","Conchalí","El Bosque","Estación Central","Huechuraba",
     "Independencia","La Cisterna","La Florida","La Granja","La Pintana","La Reina",
