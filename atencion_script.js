@@ -279,50 +279,6 @@ document.querySelectorAll('input[name="tipoAtencion"], input[name="quienFirma"]'
 actualizarVisibilidadMotivo();
 
 
-// ================= DEV-03: VALIDACIÓN ÚNICA DE FIRMA SCO =================
-// Reutilizable en los dos puntos de control (Ticket cerrado y Generar PDF),
-// para que la regla de negocio viva en un único lugar.
-// Devuelve null si está OK; si no, { foco, mensaje }.
-function validarFirmaSCO() {
-    if (!esSCO()) return null; // Soporte sin cambio de equipo: sin restricción
-
-    const quien = getQuienFirma();
-    if (!quien) {
-        return {
-            foco: 'quienFirmaBox',
-            mensaje: 'Cambio de Equipo (SCO): indique quién firma el acta, ' +
-                     'el usuario dueño del equipo o el referente del establecimiento.'
-        };
-    }
-    if (capturarFirma('firmaReferente') === '') {
-        return {
-            foco: 'firmaReferente',
-            mensaje: 'Cambio de Equipo (SCO): falta la firma de conformidad.'
-        };
-    }
-    if (quien === 'referente' && !document.getElementById('motivoFirma').value.trim()) {
-        return {
-            foco: 'motivoExcepcionBox',
-            mensaje: 'Cambio de Equipo (SCO): si el referente firma en lugar ' +
-                     'del usuario dueño del equipo, debe indicar el motivo.'
-        };
-    }
-    return null;
-}
-
-// Punto de control 1: al marcar "Ticket cerrado" (bloqueo duro, mismo patrón
-// ya usado en el resto del formulario: alert + scrollIntoView + revertir).
-document.getElementById('ticketCerrado').addEventListener('change', function () {
-    if (!this.checked) return;
-    const falla = validarFirmaSCO();
-    if (falla) {
-        this.checked = false;
-        mostrarAlerta(falla.mensaje);
-        document.getElementById(falla.foco).scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-});
-
-
 // ================= DEV-ADICIONAL: MOSTRAR/OCULTAR SERIES SEGÚN TIPO ATENCIÓN =================
 
 function actualizarVisibilidadSeries() {
@@ -747,18 +703,6 @@ window.generarPDFAtencion = async function () {
 
     const tipoAtencionEl = document.querySelector('input[name="tipoAtencion"]:checked');
     const resuelveEl     = document.querySelector('input[name="resuelve"]:checked');
-
-    // ========== VALIDACIÓN DEV-03: Firma condicionada a tipo de atención ==========
-    // Defensa por si se marca "Ticket cerrado" antes de completar los datos:
-    // misma regla que valida el checkbox, vía la función única validarFirmaSCO().
-    {
-        const falla = validarFirmaSCO();
-        if (falla) {
-            mostrarAlerta(falla.mensaje);
-            document.getElementById(falla.foco).scrollIntoView({ behavior: 'smooth', block: 'center' });
-            return;
-        }
-    }
 
     // Capturar series según tipo de atención
     let serieEquipo = '';
